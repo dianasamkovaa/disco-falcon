@@ -1,23 +1,25 @@
 import * as React from 'react'
-import {useAccount, useConnect} from 'wagmi'
-import {useNavigate} from "react-router";
-import {useEffect} from "react";
+import {useConnect} from 'wagmi'
+import Lending from "~/components/Lending";
+import {Button} from "@mui/material";
 
 export default function Connect() {
     const { connectors, connect } = useConnect()
-    const navigate = useNavigate()
 
-    const { isConnected } = useAccount();
+    return (
+        <>
+            <Lending>
+                <div className="flex gap-2 items-center">
+                    {
+                        connectors.map((connector) => (
+                            <Button variant="contained" key={connector.uid} onClick={() => connect({ connector })}>
+                                {connector.name}
+                            </Button>
+                        ))
+                    }
+                </div>
 
-    useEffect(() => {
-        if (isConnected) {
-            navigate('/');
-        }
-    }, [isConnected, navigate]);
-
-    return connectors.map((connector) => (
-        <button key={connector.uid} onClick={() => connect({ connector })}>
-            {connector.name}
-        </button>
-    ))
+            </Lending>
+        </>
+    )
 }
