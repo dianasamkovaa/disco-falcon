@@ -1,13 +1,19 @@
-import {isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration,} from "react-router";
-
-import type {Route} from "./+types/root";
+import {
+  isRouteErrorResponse,
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "react-router";
+import type { Route } from "./+types/root";
 import "./app.css";
-import {WagmiProvider} from "wagmi";
-import {config} from "~/utils/config";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
+import { config } from "~/utils/config";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RouterHandler from "~/utils/RouterHandler";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-       {children}
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -28,13 +34,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return(
+  return (
     <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>
-            <RouterHandler/>
-            <Outlet />
-        </QueryClientProvider>
-    </WagmiProvider>);
+      <QueryClientProvider client={queryClient}>
+        <RouterHandler />
+        <Outlet />
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
