@@ -9,19 +9,11 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import {WagmiProvider} from "wagmi";
+import {config} from "~/utils/config";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-];
+const queryClient = new QueryClient()
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -33,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+       {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -42,7 +34,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return(
+      <WagmiProvider config={config}>
+   <QueryClientProvider client={queryClient}>
+      <Outlet />
+   </QueryClientProvider>
+      </WagmiProvider>);
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
