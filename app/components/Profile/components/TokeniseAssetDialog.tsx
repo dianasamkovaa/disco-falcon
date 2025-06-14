@@ -7,13 +7,15 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+import { useWriteContract } from "wagmi";
+import abi from "~/abi/RWAtoken.json";
 
 interface CreateNFTDialogProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function CreateNFTDialog({
+export default function TokeniseAssetDialog({
   open,
   onClose,
 }: CreateNFTDialogProps) {
@@ -22,20 +24,25 @@ export default function CreateNFTDialog({
   const [certificateNumber, setCertificateNumber] = useState("");
   const [storageLocation, setStorageLocation] = useState("");
 
+  const { writeContract } = useWriteContract();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const formData: {
-      goldWeight: string;
-      purity: string;
-      certificateNumber: string;
-      storageLocation: string;
-    } = {
-      goldWeight,
-      purity,
-      certificateNumber,
-      storageLocation,
-    };
-    console.log("Form Data:", formData);
+
+    writeContract({
+      address: "0x1A49d8Fa0F7504CD11c9609Ac71B428FAF06fdda",
+      abi,
+      functionName: "tokenizeGold",
+      chainId: 11155111, // Sepolia Testnet
+      args: [
+        goldWeight,
+        purity,
+        certificateNumber,
+        storageLocation,
+        "ipfs://bafybeihcv7mvyxze27p2x5ic3w26nro6kok26cs54be4xsq2xaif2qrkla",
+      ],
+    });
+
     onClose();
   };
 

@@ -18,8 +18,7 @@ export default function Home() {
   }, [disconnect]);
 
   return (
-    <div className="">
-      <Button onClick={handleLogout}>disconnect</Button>
+    <div className="pt-15">
       <Profile />
     </div>
   );

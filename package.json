@@ -5,12 +5,14 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
+    "dev-host": "react-router dev --host",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.1",
     "@mui/material": "^7.1.1",
     "@react-router/node": "^7.5.3",
     "@react-router/serve": "^7.5.3",

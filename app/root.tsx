@@ -12,6 +12,7 @@ import { WagmiProvider } from "wagmi";
 import { config } from "~/utils/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RouterHandler from "~/utils/RouterHandler";
+import { ThemeProvider } from "~/utils/theme";
 
 const queryClient = new QueryClient();
 
@@ -37,8 +38,10 @@ export default function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RouterHandler />
-        <Outlet />
+        <ThemeProvider>
+          <RouterHandler />
+          <Outlet />
+        </ThemeProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

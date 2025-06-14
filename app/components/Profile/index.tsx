@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Typography } from "@mui/material";
-import CreateNFTDialog from "./components/CreateNFTDialog";
+import TokeniseAssetDialog from "./components/TokeniseAssetDialog";
 import Wallet from "~/components/Profile/Wallet";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Profile() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -15,12 +16,27 @@ export default function Profile() {
   };
 
   return (
-    <div>
-      <Typography variant="h4">Profile</Typography>
-      <div>
-        <Button onClick={handleOpenDialog}>Create NFT</Button>
+    <div className="px-40">
+      <div className="flex items-start justify-between">
+        <div>
+          <Typography mb={2} variant="h4">
+            My Assets
+          </Typography>
+          <div>
+            Manage and tokenize your physical assets for collateral lending
+          </div>
+        </div>
+        <Button
+          startIcon={<AddIcon />}
+          variant="contained"
+          size="large"
+          onClick={handleOpenDialog}
+        >
+          Tokenise Asset
+        </Button>
       </div>
-      <CreateNFTDialog open={dialogOpen} onClose={handleCloseDialog} />
+      <div></div>
+      <TokeniseAssetDialog open={dialogOpen} onClose={handleCloseDialog} />
       <Wallet />
     </div>
   );
