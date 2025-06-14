@@ -1,22 +1,18 @@
 import React from "react";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Typography,
 } from "@mui/material";
+import type { AssetType } from "~/types/asset.type";
 
 interface AssetDialogProps {
   open: boolean;
   onClose: () => void;
-  asset: {
-    goldWeight: string;
-    purity: string;
-    certificateNumber: string;
-    storageLocation: string;
-  };
+  asset: AssetType;
 }
 
 export default function AssetDialog({
@@ -24,27 +20,31 @@ export default function AssetDialog({
   onClose,
   asset,
 }: AssetDialogProps) {
-  const { goldWeight, purity, certificateNumber, storageLocation } = asset;
+  const { weight, purity, certificate, storage } = asset;
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Asset Information</DialogTitle>
-      <DialogContent>
-        <Typography variant="body1">
-          <strong>Gold Weight (grams):</strong> {goldWeight}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Purity:</strong> {purity}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Certificate Number:</strong> {certificateNumber}
-        </Typography>
-        <Typography variant="body1">
-          <strong>Storage Location:</strong> {storageLocation}
-        </Typography>
+      <DialogTitle>Asset Details</DialogTitle>
+      <DialogContent className="flex flex-col gap-2">
+        <div className="flex justify-between min-w-[250px]">
+          <Typography>Gold Weight (grams):</Typography>
+          <Typography>{weight}</Typography>
+        </div>
+        <div className="flex justify-between min-w-[250px]">
+          <Typography>Purity:</Typography>
+          <Typography>{purity}</Typography>
+        </div>
+        <div className="flex justify-between min-w-[250px]">
+          <Typography>Certificate Number:</Typography>
+          <Typography>{certificate}</Typography>
+        </div>
+        <div className="flex justify-between min-w-[250px]">
+          <Typography>Storage Location:</Typography>
+          <Typography>{storage}</Typography>
+        </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={onClose} variant="outlined" color="primary">
           Close
         </Button>
       </DialogActions>

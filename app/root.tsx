@@ -9,7 +9,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { WagmiProvider } from "wagmi";
-import { config } from "~/utils/config";
+import { WAGMIConfig } from "~/utils/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RouterHandler from "~/utils/RouterHandler";
 import { ThemeProvider } from "~/utils/theme";
@@ -36,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={WAGMIConfig}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <RouterHandler />

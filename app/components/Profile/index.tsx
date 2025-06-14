@@ -3,9 +3,19 @@ import { Button, Typography } from "@mui/material";
 import TokeniseAssetDialog from "./components/TokeniseAssetDialog";
 import Wallet from "~/components/Profile/Wallet";
 import AddIcon from "@mui/icons-material/Add";
+import { useGetNfts } from "~/utils/hooks/gold";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import CollateralAssets from "~/components/Profile/CollateralAssets";
 
 export default function Profile() {
+  const { refetch } = useGetNfts();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [value, setValue] = React.useState("my-assets");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
@@ -13,6 +23,9 @@ export default function Profile() {
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
+    setTimeout(() => {
+      refetch(); // ← обновляем список через 1-2 секунды
+    }, 1500);
   };
 
   return (
@@ -35,9 +48,19 @@ export default function Profile() {
           Tokenise Asset
         </Button>
       </div>
-      <div></div>
       <TokeniseAssetDialog open={dialogOpen} onClose={handleCloseDialog} />
-      <Wallet />
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        textColor="secondary"
+        indicatorColor="secondary"
+        sx={{ mt: 3 }}
+      >
+        <Tab value="my-assets" label="My Assets" />
+        <Tab value="collateral" label="Collateral Assets" />
+      </Tabs>
+      {value === "my-assets" && <Wallet />}
+      {value === "collateral" && <CollateralAssets />}
     </div>
   );
 }
