@@ -63,40 +63,62 @@ tokenization and lending.
 Our goal is to demonstrate how **bank-certified gold** can be seamlessly integrated into the DeFi ecosystem through
 tokenization and lending.
 
-### 🔐 1. Wallet Authorization
+## 🧪 MVP Flow
 
-Users authenticate by connecting their crypto wallet (e.g. MetaMask).  
-*KYC is not required at this stage.*
+### 🔐 1. Authorization
 
-### 🪙 2. Tokenizing Gold (Minting NFT)
+- The user connects their crypto wallet (via **Wagmi**).
+- No KYC is required at this stage.
 
-Users can manually create an NFT representing physical gold by filling in the following details:
+---
 
-- Gold weight (grams)
-- Fineness (e.g., 999)
-- Certificate number
-- Storage location
+### 🪙 2. Tokenizing Bank-Certified Gold
 
-After submission:
+- The user manually fills out a form with:
+   - Gold weight
+   - Fineness (purity)
+   - Certificate number
+   - Storage location
+- Upon submission, an NFT is minted with this metadata.
+- The NFT is **immediately active**—no verification or document validation is required in the MVP.
 
-- An NFT is instantly minted with the entered metadata.
-- The NFT is fully active immediately—no documents or verification required for MVP.
+---
 
 ### 👤 3. User Profile
 
-Users see a list of all NFTs they've created:
+- The user sees a list of all their minted NFTs.
+- Each NFT card includes:
+   - Detailed metadata
+   - A button: **“Use as Collateral”**
 
-- Each NFT displays detailed metadata.
-- Each NFT includes a **"Use as Collateral"** button.
+---
 
-### 💸 4. Instant Crypto Loan
+### 💸 4. Taking a Loan
 
-When a user clicks **"Use as Collateral"**, the system:
+- When the user clicks **“Use as Collateral”**, the system:
+   1. Fetches the gold price via an Oracle based on the NFT metadata
+   2. Transfers the NFT from the user to the smart contract
+   3. Instantly sends a crypto loan to the user’s wallet
+      > *(In the MVP, loan funds are preloaded into the contract — no investor pool involved)*
 
-1. Fetches real-time asset price via an Oracle (e.g., RedStone, Chainlink).
-2. Transfers the NFT to the smart contract.
-3. Instantly sends a loan (in crypto) to the user's wallet.
-   > *In the MVP: loan funds are preloaded in the contract (no investor pool).*
+---
+
+### 📂 5. Collateral Management
+
+- In the **Profile**, the user can now view:
+   - **Available Assets** (active NFTs)
+   - **Collateralized Assets** (NFTs locked for loans)
+- On the **Collateralized** tab, the user can:
+   - Make a loan **repayment**
+   - Upon full repayment, the NFT is returned to the user’s wallet
+
+---
+
+### 🧾 6. Balance Tracking
+
+- In the **Header**, the user sees their current balance:
+   - The balance **increases** when they receive a loan
+   - The balance **decreases** when they repay the loan
 
 ---
 
