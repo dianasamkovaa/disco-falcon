@@ -135,11 +135,12 @@ export const useGetLoans = () => {
     "pending"
   );
   const [error, setError] = useState<Error | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!address) return;
 
-    setStatus("pending");
+    setIsFetching(true);
     try {
       const [nftData, logs] = await Promise.all([
         WAGMIPublicClient.readContract({
@@ -208,9 +209,10 @@ export const useGetLoans = () => {
       setData(successfulLoans);
       setStatus("success");
     } catch (err) {
-      console.error("Error fetching loans:", err);
       setError(err as Error);
       setStatus("error");
+    } finally {
+      setIsFetching(false);
     }
   }, [address]);
 
@@ -218,7 +220,7 @@ export const useGetLoans = () => {
     fetchData();
   }, [fetchData]);
 
-  return { data, status, error, refetch: fetchData };
+  return { data, status, error, refetch: fetchData, isFetching };
 };
 
 export const useApproveTransferAssets = () => {
@@ -227,7 +229,11 @@ export const useApproveTransferAssets = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { data: approvedData, refetch } = useReadContract({
+  const {
+    data: approvedData,
+    refetch: refetchApproval,
+    isSuccess: isApprovalFetched,
+  } = useReadContract({
     address: config.RWA_TOKEN_ADDRESS,
     abi: RWAtokenAbi,
     functionName: "isApprovedForAll",
@@ -236,12 +242,6 @@ export const useApproveTransferAssets = () => {
       enabled: !!address,
     },
   });
-
-  useEffect(() => {
-    if (typeof approvedData === "boolean") {
-      setIsApproved(approvedData);
-    }
-  }, [approvedData]);
 
   const {
     data: txHash,
@@ -253,11 +253,16 @@ export const useApproveTransferAssets = () => {
     hash: txHash,
     chainId: config.CHAIN_ID,
     enabled: !!txHash,
-    onSuccess: () => {
-      setIsApproved(true);
+    onSuccess: async () => {
+      const result = await refetchApproval();
+      if (typeof result.data === "boolean") {
+        setIsApproved(result.data);
+      }
+      setIsLoading(false);
     },
     onError: (err) => {
       setError(err);
+      setIsLoading(false);
     },
   });
 
@@ -281,6 +286,12 @@ export const useApproveTransferAssets = () => {
   }, [address, writeContract]);
 
   useEffect(() => {
+    if (typeof approvedData === "boolean") {
+      setIsApproved(approvedData);
+    }
+  }, [approvedData]);
+
+  useEffect(() => {
     setIsLoading(isWriting || isConfirming);
   }, [isWriting, isConfirming]);
 
@@ -289,6 +300,6 @@ export const useApproveTransferAssets = () => {
     handleApprove,
     isLoading,
     error,
-    refetchStatus: refetch,
+    refetchStatus: refetchApproval,
   };
 };

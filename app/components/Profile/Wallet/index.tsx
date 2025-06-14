@@ -1,10 +1,10 @@
-import WalletItem from "~/components/Profile/Wallet/components/Item";
 import { useApproveTransferAssets, useGetNfts } from "~/utils/hooks/gold";
 import CircularProgress from "@mui/material/CircularProgress";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import FolderOffIcon from "@mui/icons-material/FolderOff";
 import Button from "@mui/material/Button";
 import CheckIcon from "@mui/icons-material/Check";
+import WalletItem from "~/components/Profile/Wallet/components/Item";
 
 const Wallet = () => {
   const { data, status, error, refetch } = useGetNfts();
@@ -72,7 +72,12 @@ const Wallet = () => {
 
       <div className="flex gap-6 flex-wrap">
         {data.map((item) => (
-          <WalletItem key={item.id} item={item} refetch={refetch} />
+          <WalletItem
+            key={item.id}
+            item={item}
+            refetch={refetch}
+            disabled={!isApproved}
+          />
         ))}
       </div>
     </div>

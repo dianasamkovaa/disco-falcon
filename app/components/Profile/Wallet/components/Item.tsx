@@ -135,7 +135,8 @@ const WalletItem: FC<{
   item: AssetType | LoanedAssetType;
   refetch: () => void;
   isCollateral?: boolean;
-}> = ({ item, isCollateral, refetch }) => {
+  disabled?: boolean;
+}> = ({ item, isCollateral, refetch, disabled }) => {
   const { id, type, weight, purity } = item;
   const certificate = (item as AssetType)?.certificate;
   const amount = (item as LoanedAssetType)?.amount;
@@ -219,45 +220,48 @@ const WalletItem: FC<{
       )}
 
       <div className="flex gap-3 mt-4 justify-between">
-        <Tooltip title="View asset details">
-          <Button
-            sx={{ textTransform: "none" }}
-            variant="outlined"
-            className="flex-1"
-            onClick={() => {
-              seDetailDialogOpen(true);
-            }}
-          >
-            Detail
-          </Button>
-        </Tooltip>
+        <Button
+          sx={{ textTransform: "none" }}
+          variant="outlined"
+          className="flex-1"
+          onClick={() => {
+            seDetailDialogOpen(true);
+          }}
+        >
+          Detail
+        </Button>
 
         {isCollateral ? (
-          <Tooltip title="Repay loan">
-            <Button
-              sx={{ textTransform: "none" }}
-              variant="contained"
-              color="warning"
-              className="flex-1"
-              onClick={repay}
-              disabled={isLoading}
-              startIcon={isLoading ? <CircularProgress size={18} /> : null}
-            >
-              {isLoading ? "Processing..." : "Make payment"}
-            </Button>
-          </Tooltip>
+          <Button
+            sx={{ textTransform: "none" }}
+            variant="contained"
+            color="warning"
+            className="flex-1"
+            onClick={repay}
+            disabled={isLoading}
+            startIcon={isLoading ? <CircularProgress size={18} /> : null}
+          >
+            {isLoading ? "Processing..." : "Make payment"}
+          </Button>
         ) : (
-          <Tooltip title="Use this NFT as collateral">
-            <Button
-              sx={{ textTransform: "none" }}
-              variant="contained"
-              className="flex-1"
-              onClick={() => {
-                setCollateralDialogOpen(true);
-              }}
-            >
-              Use as collateral
-            </Button>
+          <Tooltip
+            title={
+              disabled ? "Approval required before using as collateral" : ""
+            }
+          >
+            <span className="flex-1">
+              <Button
+                sx={{ textTransform: "none" }}
+                variant="contained"
+                className="w-full"
+                onClick={() => {
+                  setCollateralDialogOpen(true);
+                }}
+                disabled={disabled}
+              >
+                Use as collateral
+              </Button>
+            </span>
           </Tooltip>
         )}
       </div>
