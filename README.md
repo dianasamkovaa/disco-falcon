@@ -1,18 +1,121 @@
-# Welcome to React Router!
+# 🏦 Gold-Backed NFT Lending Platform (MVP)
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A decentralized application that enables users to tokenize real-world gold and instantly receive crypto loans by using
+tokenized assets as collateral.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+Built during a hackathon in Kyiv 🇺🇦
 
-## Features
+---
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 💡 Project Overview
+
+We are building a **decentralized lending protocol** where users can collateralize not just crypto assets—but also *
+*real-world physical assets** like gold, real estate, and land.
+
+### 🧱 What Makes Our Approach Unique
+
+Unlike existing platforms that only support on-chain assets, we introduce a hybrid system where **real-world ownership
+is tokenized** and represented by NFTs that can be used as collateral.
+
+Our platform enables:
+
+- ✅ Real asset collateralization (starting with certified gold)
+- 🔗 NFT tokenization representing legal ownership
+- 🤝 Integration with storage/verification partners# 🏦 Gold-Backed NFT Lending Platform (MVP)
+
+A decentralized application that enables users to tokenize real-world gold and instantly receive crypto loans by using
+tokenized assets as collateral.
+
+Built during a hackathon in Kyiv 🇺🇦
+
+---
+
+## 💡 Project Overview
+
+We are building a **decentralized lending protocol** where users can collateralize not just crypto assets—but also *
+*real-world physical assets** like gold, real estate, and land.
+
+### 🧱 What Makes Our Approach Unique
+
+Unlike existing platforms that only support on-chain assets, we introduce a hybrid system where **real-world ownership
+is tokenized** and represented by NFTs that can be used as collateral.
+
+Our platform enables:
+
+- ✅ Real asset collateralization (starting with certified gold)
+- 🔗 NFT tokenization representing legal ownership
+- 🤝 Integration with storage/verification partners (future)
+- 💰 Instant loans issued by smart contracts
+
+---
+
+## 🧪 MVP Overview
+
+Our goal is to demonstrate how **bank-certified gold** can be seamlessly integrated into the DeFi ecosystem through
+tokenization and lending.
+
+- 💰 Instant loans issued by smart contracts
+
+---
+
+## 🧪 MVP Overview
+
+Our goal is to demonstrate how **bank-certified gold** can be seamlessly integrated into the DeFi ecosystem through
+tokenization and lending.
+
+### 🔐 1. Wallet Authorization
+
+Users authenticate by connecting their crypto wallet (e.g. MetaMask).  
+*KYC is not required at this stage.*
+
+### 🪙 2. Tokenizing Gold (Minting NFT)
+
+Users can manually create an NFT representing physical gold by filling in the following details:
+
+- Gold weight (grams)
+- Fineness (e.g., 999)
+- Certificate number
+- Storage location
+
+After submission:
+
+- An NFT is instantly minted with the entered metadata.
+- The NFT is fully active immediately—no documents or verification required for MVP.
+
+### 👤 3. User Profile
+
+Users see a list of all NFTs they've created:
+
+- Each NFT displays detailed metadata.
+- Each NFT includes a **"Use as Collateral"** button.
+
+### 💸 4. Instant Crypto Loan
+
+When a user clicks **"Use as Collateral"**, the system:
+
+1. Fetches real-time asset price via an Oracle (e.g., RedStone, Chainlink).
+2. Transfers the NFT to the smart contract.
+3. Instantly sends a loan (in crypto) to the user's wallet.
+   > *In the MVP: loan funds are preloaded in the contract (no investor pool).*
+
+---
+
+## 🛠 Tech Stack
+
+- React Router + Vite
+- Tailwind CSS
+- TypeScript
+- EVM-compatible smart contracts (Solidity)
+- Chainlink/RedStone Oracle (for gold price)
+- WalletConnect / Wagmi
+
+---
+
+## 📦 Installation
+
+```bash
+npm install
+
 
 ## Getting Started
 
@@ -64,24 +167,4 @@ The containerized application can be deployed to any platform that supports Dock
 - Fly.io
 - Railway
 
-### DIY Deployment
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
